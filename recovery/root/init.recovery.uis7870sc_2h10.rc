@@ -88,6 +88,7 @@ on init
     mkdir /config/usb_gadget/g1/functions/gser.gs7 0770 shell shell
 
 on boot
+    start health-hal-2-1
     setprop sys.usb.configfs 1
     write /sys/block/mmcblk0boot0/force_ro 0
     write /sys/block/mmcblk0boot1/force_ro 0
@@ -105,7 +106,7 @@ on fs
     mkdir /data/misc/bluetooth 0770 system system
 	
 on post-fs
-	start console
+    start boot-hal-1-2
 	
 service console /system/bin/sh
     class core
@@ -118,6 +119,7 @@ service console /system/bin/sh
 
 
 on post-fs-data
+    start boot-hal-1-2
     # We chown/chmod /data again so because mount is run as root + defaults
     chown system system /data
     chmod 0771 /data
